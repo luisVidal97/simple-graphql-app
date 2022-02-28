@@ -26,7 +26,7 @@ const typeDefs = gql`
   type Query {
     peopleCount: Int!
     allPeople(phone: YesNo): [Person]!
-    findPerson(name: String!): Person
+    findPerson(fullName: String!): Person
   }
 
   type Mutation {
@@ -49,16 +49,16 @@ const resolvers = {
   Query: {
     peopleCount: () => people.length,
     allPeople: async(_, args) => {
-      const { data: people } = await axios.get('http://localhost:3000/people');
+      const { data: people } = await axios.get('http://localhost:4001/people');
 
       if(!args.phone) return people;
       const byPhone = (person) => args.phone === "YES"? !!person.phone : !person.phone;
       return  people.filter( byPhone );
     },
-    findPerson: (root, args) => {
-      console.log(root)
-      const { name } = args;
-      return people.find(p => p.name === name);
+    findPerson: async(_, args) => {
+      const { fullName } = args;
+      const { data: people } = await axios.get('http://localhost:4001/people');
+      return people.find(p => `${p.name} ${p.lastName}` === fullName);
     },
   },
   Mutation: {
