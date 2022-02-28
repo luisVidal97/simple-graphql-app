@@ -1,0 +1,27 @@
+{
+  "people": [
+    {
+      "id": 4300,
+      "name": "Pepito",
+      "lastName": "Perez",
+      "phone": 3175698771,
+      "city": "Evonnestad",
+      "street": "Bahringer Spur"
+    },
+    {
+      "id": 2507,
+      "name": "Juanez",
+      "lastName": "Gonzales",
+      "phone": 3175698772,
+      "city": "Janaside",
+      "street": "Charla Plaza"
+    },
+    {
+      "id": 5047,
+      "name": "Elver",
+      "lastName": "Martinez",
+      "city": "North Hueyfort",
+      "street": "Rau Lodge"
+    }
+  ]
+}
