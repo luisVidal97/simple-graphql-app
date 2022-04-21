@@ -1,0 +1,9 @@
+
+curl -X POST \
+  'http://localhost:4000' \
+  --header 'Accept: */*' \
+  --header 'User-Agent: Thunder Client (https://www.thunderclient.com)' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "query": "query { allPeople { name } }"
+}'

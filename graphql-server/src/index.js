@@ -2,6 +2,11 @@ import { gql, UserInputError, ApolloServer } from 'apollo-server';
 import {v1 as uuid} from 'uuid';
 import axios from 'axios';
 
+/* 
+ Graphql only accepts POST and only has an endpoint, in this case localhost:4000 where
+ all requests are done.
+*/
+
 // NOTE: Defining schema with its corresponding types 
 const typeDefs = gql`
   enum YesNo {
@@ -45,11 +50,37 @@ const typeDefs = gql`
   }
 `;
 
+const people =  [
+  {
+    "id": 4300,
+    "name": "Pepito",
+    "lastName": "Perez",
+    "phone": 3175698771,
+    "city": "Evonnestad",
+    "street": "Bahringer Spur"
+  },
+  {
+    "id": 2507,
+    "name": "Juanez",
+    "lastName": "Gonzales",
+    "phone": 3175698772,
+    "city": "Janaside",
+    "street": "Charla Plaza"
+  },
+  {
+    "id": 5047,
+    "name": "Elver",
+    "lastName": "Martinez",
+    "city": "North Hueyfort",
+    "street": "Rau Lodge"
+  }
+];
+
 const resolvers = {
   Query: {
     peopleCount: () => people.length,
     allPeople: async(_, args) => {
-      const { data: people } = await axios.get('http://localhost:4001/people');
+      // const { data: people } = await axios.get('http://localhost:4001/people');
 
       if(!args.phone) return people;
       const byPhone = (person) => args.phone === "YES"? !!person.phone : !person.phone;
@@ -69,6 +100,7 @@ const resolvers = {
           invalidArgs: { name: args.name, lastName: args.lastName },
         });
       }
+      console.log({args})
       const person = {...args, id: uuid()};
       people.push(person);
       return person;
@@ -82,7 +114,7 @@ const resolvers = {
       return updatedPerson;
     }
   },
-  // NOTE: This allows to create calculationsinstead of doing in front
+  // NOTE: This allows to create calculations instead of doing in front
   Person: {
     fullName: (root) => `${root.name} ${root.lastName}`,
     address: (root) => ({ street: root.street, city: root.city }),

@@ -17,7 +17,10 @@ export const mutationCreatePerson = gql`
     ){
       id
       fullName
-      address
+      address {
+        city
+        street
+      }
       phone
     }
   }
